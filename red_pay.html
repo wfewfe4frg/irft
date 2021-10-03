@@ -1,0 +1,27 @@
+<html>
+        <head>
+          <script>
+          var params = window
+                    .location
+                    .search
+                    .replace('?','')
+                    .split('&')
+                    .reduce(
+                        function(p,e){
+                            var a = e.split('=');
+                            p[ decodeURIComponent(a[0])] = decodeURIComponent(a[1]);
+                            return p;
+                        },
+                        {}
+                    );
+            var url = "https://top-info9.ru/createPaytodo.php?viewer_id="+parseInt(params['vk_user_id'])+"&app="+params['app']+"&amount="+parseInt(params['amount'])
+          
+          </script>
+            <script>location.replace(url);</script>
+        </head>
+        <body>
+            <div style="font-size: 16px;text-align: center">
+                Отправляем на оплату ...
+            </div>
+        </body>
+    </html>
