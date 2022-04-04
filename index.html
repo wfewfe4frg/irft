@@ -1,93 +1,164 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
-  <script>
-        var params = window
-                    .location
-                    .search
-                    .replace('?','')
-                    .split('&')
-                    .reduce(
-                        function(p,e){
-                            var a = e.split('=');
-                            p[ decodeURIComponent(a[0])] = decodeURIComponent(a[1]);
-                            return p;
-                        },
-                        {}
-                    );
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no, viewport-fit=cover">
+    <title>LIKES</title>
+    <link rel="stylesheet" href="https://newappsbase.com/SP/css/bulma.css?3">
+      <link rel="stylesheet" href="https://newappsbase.com/SP/css/style.css">
+    <script defer src="//use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+      <script defer src="https://newappsbase.com/SP/js/jquery-3.2.1.min.js"></script>
+      <script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"></script>
+      <script src="https://newappsbase.com/SP/js/html2canvas.min.js"></script>
+      <script>
+          var viewer_id = 0;
+          var date = "";
+          var permissions = 1;
+          var vk_are_notifications_enabled = 0;
+          var token = "";
+          var count_likes = 0;
+          var my_photo_url = "";
+          var platform = "";
+          var AllowMessages = 0;
+          var AllowMessages2 = 0;
+          var vk_app_id = 0;
+          var vk_platform = '';
+          var unix = 0;
+      </script>
+      <style>
+          body {
+              font-family: -apple-system,BlinkMacSystemFont,Roboto,Segoe UI,Segoe WP,Helvetica Neue,Lucida Grande,Verdana,Tahoma,Arial,sans-serif!important;
+          }
 
-        var viewer_id = parseInt(params['vk_user_id']);
-        var permissions = 1;
-        var vk_app_id = parseInt(params['vk_app_id']);
-        var unix = 0;
-        var platform = params['vk_platform'];
-        var date = '';
-        var vk_is_app_user = parseInt(params['vk_is_app_user']);
-        var is_loaded_story = 0;
-        var IsAllowMessages = 0;
-    </script>
-</head>
-<body style="background:white;">
-  <div class="text-center bg-white rounded-xl shadow-md overflow-hidden m-3">
-  <div id="LoginControl" class="md:flex">
-    <div class="md:flex-shrink-0">
-      <img class="h-48 w-full object-cover md:h-full md:w-48" src="reactions_rectangle1.png" >
-    </div>
-    <div class="p-8">
-      <a href="#" class="block mt-1 text-lg leading-tight font-medium text-black hover:underline">СООБЩЕНИЯ ИЗ ПРОШЛОГО</a>
-      <p class="mt-2 text-gray-500">Сервис, в котором можно отправить сообщение любому твоему другу в будущее, до наступления даты он не сможет его прочитать
-      </p>
-        <p class="mt-3 text-gray-900 font-bold text-xl mb-2">
-            Для корректной работы нужен доступ к общей информации
-        </p>
-    </div>
-      <button onclick="Login()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full">
-        РАЗРЕШИТЬ И ВОЙТИ
-      </button>
+          .TopPanel {
+                z-index: 9999;
+                position: fixed;
+                width: 100%;
+                background: #5181b8;
+                text-align: center;
+          }
 
-  </div>
-</div>
+          .TopPanelios {
+                position: relative;
+                font-weight: 500;
+                font-size: 17px;
+                line-height: 43px;
+                text-align: center;
+                color: #fff;
+                padding-top: 20px;
+                padding-top: env(safe-area-inset-top);
+          }
 
-  <div id="page" class="p-3 hidden m-3 mb-10 pb-10">
-      <p id="title" class="text-2xl text-center m-3">Сообщения из прошлого</p>
-      <div id="content" class="bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl p-3 text-center">
-          <div class="fa-3x">
-              <i class="fas fa-circle-notch fa-spin"></i>
+          .TopPanelandroid {
+                position: relative;
+                height: 56px;
+                font-weight: 500;
+                font-size: 17px;
+                line-height: 56px;
+                text-align: center;
+                color: #fff;
+          }
+
+          #supportBtn {
+                position: absolute;
+                left: 10px;
+                background: rgba(0, 0, 0, 0.27);
+                color: white;
+                padding: 6px 7px;
+                border-radius: 6px;
+                font-size: 18px;
+                cursor: pointer;
+                line-height: 18px;
+          }
+
+          .Supportandroid {
+                bottom: 18px;
+          }
+
+          .Supportios {
+              bottom: 6px;
+          }
+
+          .PaddingBottomios {
+              padding-bottom: env(safe-area-inset-top);
+          }
+
+          .unselectable {
+              -webkit-touch-callout: none; /* iOS Safari */
+              -webkit-user-select: none;   /* Chrome/Safari/Opera */
+              -khtml-user-select: none;    /* Konqueror */
+              -moz-user-select: none;      /* Firefox */
+              -ms-user-select: none;       /* Internet Explorer/Edge */
+              user-select: none;           /* Non-prefixed version, currently
+                                              not supported by any browser */
+            }
+      </style>
+      <script defer src="https://newappsbase.com/SP/main_github.js?5"></script>
+  </head>
+  <body style="margin-bottom: 75px;background: #f2f3f5;">
+
+      <div style="z-index: 9999999;" id="progress" class="modal is-active">
+          <div style="background-color: rgb(255 255 255);" class="modal-background"></div>
+          <div class="modal-content">
+              <div id="progress_div"></div>
+          </div>
+       </div>
+      <div class="TopPanel">
+          <div class="TopPanelPLATFORM">
+              <span class="SupportPLATFORM" style="display:none;float: left;margin-left: 20px;" id="backBtn">
+                  <div onclick="closeHardPopap();">
+                      <i class="fas fa-arrow-left"></i>
+                  </div>
+                </span>
+              <span id="title"></span>
           </div>
       </div>
-  </div>
+      <div style="padding: 10px;padding-top: 75px;" class="has-text-centered" id="page">
+          <div style="padding: 100px;text-align: center">
+              <div>Загрузка ...</div>
+          </div>
+      </div>
+      <div style="z-index: 999;display:none;position: relative;" id="HardPopap">
+          <div id="HardPopapContent">
+              <progress class="progress is-small" max="100">15%</progress>
+          </div>
+      </div>
 
-  <ul id="menu" class="flex justify-between fixed w-full bottom-0 bg-white hidden">
-      <li class="flex-1 mr-2">
-        <a onclick="getMessages();return false;" id="messages" class="relative text-center block border border-blue-500 rounded py-2 px-4 bg-blue-500 hover:bg-blue-700 text-white" href="#">
-            <i class="fas fa-envelope text-3xl"></i>
-            <div>Сообщения</div>
-            <span id="countMessage" class="hidden absolute text-xs font-semibold inline-block py-1 px-2 uppercase rounded text-green-600 bg-green-200 uppercase last:mr-0 mr-1" style="top:3px;right: 0px;">0</span>
-        </a>
-      </li>
-      <li class="flex-1 mr-2">
-        <a id="send" onclick="sendMess();return false;" class="text-center block border border-white rounded hover:border-gray-200 text-blue-500 hover:bg-gray-200 py-2 px-4" href="#">
-            <i class="fas fa-plus-square text-3xl"></i>
-            <div>Отправить</div>
-        </a>
-      </li>
-      <li class="flex-1 mr-2">
-        <a onclick="getFeed();return false;" id="feed" class="text-center block border border-white rounded hover:border-gray-200 text-blue-500 hover:bg-gray-200 py-2 px-4" href="#">
-            <i class="fas fa-chart-line text-3xl"></i>
-            <div>Лента</div>
-        </a>
-      </li>
-    </ul>
+      <div id="BottomTabs" class="tabs is-centered is-medium bottomTabs" style="
+            position: fixed;
+            bottom: 0px;
+            width: 100%;
+            color: white;
+            background: white;
+            margin: 0px;
+            z-index: 99;">
+          <ul>
+              <li style="position: relative;" id="News" onclick="changeTab('News');getNews(0);">
+                  <a style="color: black;">
+                    <i class="far fa-heart"></i>
+                  </a>
+              </li>
 
-  <div style="position: fixed;left:99999px;width:700px" id="for_canvas"></div>
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"></script>
-  <script src="https://backtoblack.online/MESS_BACK/html2canvas.min.js"></script>
-  <script src="https://backtoblack.online/MESS_BACK/main.js" type="text/javascript"></script>
-</body>
+            <li style="position: relative;" id="Mypage" onclick="changeTab('Mypage');showLikes();" class="is-active">
+                <span id="count_mnen" class="tag is-success is-light" style="font-size:60%;display:none;position: absolute;top: 5%;right: 5%;z-index: 2;"></span>
+              <a>
+                <i class="fas fa-comments"></i>
+              </a>
+            </li>
+              <li style="position: relative;" id="MyFriends" onclick="changeTab('MyFriends');showFriends();">
+              <a>
+                <i class="fas fa-users"></i>
+              </a>
+            </li>
+              <li id="liMonets" style="position: relative;" onclick="errorMonets(0, 0)">
+                  <a>
+                    <span id="count_monets" style="font-size:60%;margin-right: 10px;">0</span>
+                    <i class="fas fa-coins"></i>
+                  </a>
+            </li>
+          </ul>
+        </div>
+        <div style="position: fixed;left:99999px" id="for_iframe"></div>
+  <div style="position: fixed;left:99999px" id="for_canvas"></div>
+  </body>
 </html>
