@@ -49,9 +49,9 @@
           var short_url = "https://vk.com/app"+vk_app_id;
           var base64_story= '';
           var link_app = short_url;
-          $(function() {
+          window.onload = function() {
               //vkConnect = vkConnect.default
-              vkConnect.send('VKWebAppInit');
+              //vkConnect.send('VKWebAppInit');
               vkConnect.sendPromise('VKWebAppGetUserInfo')
                   .then(data => {
                       viewer = data;
@@ -75,7 +75,7 @@
 
                 }
               });
-          });
+          }
 
           function getAppLink() {
             $.ajax({
