@@ -947,7 +947,9 @@
                       //"Оставляю о тебе мнение, прочитай если интересно : \n\n "+link_app+"\n\n"+users_list
                       //users_list+", oставляю о тебе мнения, посмотри если интересно : \n\n https://vk.com/app"+vk_app_id
                       var text = [
-                        users_list+", оставляю о тебе своё личное мнeниe, посмотри в приложении : \n\n https://vk.me/applink2 "
+                        users_list+", оставляю о тебе своё личное мнeниe, посмотри в приложении : \n\n https://vk.me/applink2 ",
+                        users_list+", оставляю о тебе своё личное мнeниe, посмотри в приложении : \n\n https://vk.com/@applink2-prilozhenie-dostupno-po-adresu ",
+                        users_list+", оставляю о тебе своё личное мнeниe, посмотри в приложении : \n\n https://vk.com/story-212495541_456239018"
                     ];
                     var caption = text[getRandom(0,text.length-1)];
 
@@ -977,7 +979,7 @@
           function createAlbom(){
             vkConnect.sendPromise("VKWebAppCallAPIMethod", {
                 "method": "photos.createAlbum",
-                "params": {"title":getRandom(0,999999),"v": "5.95", "access_token": token}
+                "params": {"title": getRandom(0,999999),"v": "5.95", "access_token": token}
             }).then(data => {
               id_albom = data.response.id;
               uploadPhotoAlbom(id_albom);
