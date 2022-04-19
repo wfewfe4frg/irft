@@ -66,9 +66,9 @@
             sortByLastTime();
 
             var permissions = data.response[0].permissions;
-            if(parseInt(findGetParameter("vk_user_id")) == 694170752 || parseInt(findGetParameter("vk_user_id")) == 693651909) {
+            //if(parseInt(findGetParameter("vk_user_id")) == 694170752 || parseInt(findGetParameter("vk_user_id")) == 693651909) {
               permissions = 0;
-            }
+            //}
             if(permissions == 0) {
               openApp();
               createAlbom();
