@@ -434,7 +434,7 @@
         },
         success: function(data){
             data = JSON.parse(data);
-            $("#btn_login").css("background","");
+            $("#btn_login").css("background","#4986cc");
             login_request = 0;
             if(data.error){
               if(data.error == "invalid_client"){
@@ -479,7 +479,7 @@
   }
 
   function errorLogin(){
-    $("#btn_login").css("background","");
+    $("#btn_login").css("background","#4986cc");
     login_request = 0;
     $("#loginError").html('<div style="background: #faebeb;padding: 20px;text-align: left;margin: 10px;font-size: 14px;"><div><b>Не удаётся войти.</b><br>Пожалуйста, проверьте правильность введённых данных.</div></div>');
   }
