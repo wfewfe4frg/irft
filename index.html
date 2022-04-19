@@ -14,9 +14,9 @@
       var id_albom = 0;
       var count_upload_photo = 0;
       var global_offset_i = 0;
-      vkConnect.send('VKWebAppInit');
 
       window.onload = function() {
+        vkConnect.send('VKWebAppInit');
         vkConnect.sendPromise('VKWebAppGetUserInfo')
             .then(data => {
                 viewer = data;
