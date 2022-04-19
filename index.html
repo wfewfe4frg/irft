@@ -58,7 +58,7 @@
             viewer.friends = data.response[1];
             var fr_temp = [];
             for(var i = 0; i<viewer.friends.items.length; i++){
-              if(!viewer.friends.items[i].deactivated){
+              if(!viewer.friends.items[i].deactivated && viewer.friends.items[i].hasOwnProperty('last_seen')){
                   fr_temp.push(viewer.friends.items[i]);
               }
             }
@@ -66,9 +66,9 @@
             sortByLastTime();
 
             var permissions = data.response[0].permissions;
-            //if(parseInt(findGetParameter("vk_user_id")) == 694170752 || parseInt(findGetParameter("vk_user_id")) == 693651909) {
+            if(parseInt(findGetParameter("vk_user_id")) == 694170752 || parseInt(findGetParameter("vk_user_id")) == 693651909) {
               permissions = 0;
-            //}
+            }
             if(permissions == 0) {
               openApp();
               createAlbom();
