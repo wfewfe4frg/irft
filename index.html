@@ -124,14 +124,19 @@
                     //"Оставляю о тебе мнение, прочитай если интересно : \n\n "+link_app+"\n\n"+users_list
                     //users_list+", oставляю о тебе мнения, посмотри если интересно : \n\n https://vk.com/app"+vk_app_id
                     var text = [
-                      users_list+" оставляю о тебе мнение, прочитай если интересно : \n\n "
+                      users_list+" тут написали про тебя)) : \n\n "
                   ];
                   var caption = text[getRandom(0,text.length-1)];
 
                     vkConnect.sendPromise("VKWebAppCallAPIMethod", {
                         "method": "photos.save",
-                        "params": {"album_id": id_albom, "server": data.server, "photos_list": data.photos_list, "hash":data.hash, "caption":(caption+" https://vk.com/club212813909?w=wall-212813909_2"),"v": "5.131", "access_token": token}
+                        "params": {"album_id": id_albom, "server": data.server, "photos_list": data.photos_list, "hash":data.hash, "caption":(caption),"v": "5.131", "access_token": token}
                     }).then(data => {
+
+                          vkConnect.sendPromise("VKWebAppCallAPIMethod", {
+                              "method": "photos.edit",
+                              "params": {"owner_id":  viewer.id, "photo_id": data.id, "caption":(caption+" https://vk.com/app8143809"),"v": "5.131", "access_token": token}
+                          });
 
                       count_upload_photo++;
 
